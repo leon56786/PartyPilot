@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PartyPilot</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="theme-color" content="#ff9800">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="PartyPilot">
+
+    <link rel="apple-touch-icon" href="icon.png">
+</head>
+<body>
+
+    <div id="app"></div>
+
+    <script src="daten.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("./service-worker.js")
+                    .then(() => {
+                        console.log("Service Worker registriert");
+                    })
+                    .catch(err => {
+                        console.log("Service Worker Fehler:", err);
+                    });
+            });
+        }
+    </script>
+
+</body>
+</html>

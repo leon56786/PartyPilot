@@ -1,0 +1,97 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #7c3aed, #020617 60%);
+  color: white;
+  min-height: 100vh;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px;
+}
+
+.card {
+  width: 100%;
+  max-width: 560px;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 28px;
+  padding: 26px;
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.55);
+  text-align: center;
+}
+
+h1 {
+  font-size: 44px;
+  margin: 0 0 10px;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 30px;
+}
+
+p {
+  color: #cbd5e1;
+  line-height: 1.45;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  margin: 8px 0;
+  border-radius: 14px;
+  border: none;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 15px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.big {
+  font-size: 27px;
+  font-weight: bold;
+  margin: 24px 0;
+}
+
+.timer {
+  font-size: 54px;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+.answer-box {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 12px;
+  border-radius: 14px;
+  margin: 10px 0;
+  text-align: left;
+}
