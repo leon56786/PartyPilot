@@ -1,4 +1,4 @@
-const CACHE_NAME = "partypilot-v1";
+const CACHE_NAME = "partypilot-v2";
 
 const urlsToCache = [
   "./",
@@ -6,7 +6,8 @@ const urlsToCache = [
   "./style.css",
   "./script.js",
   "./daten.js",
-  "./manifest.json"
+  "./manifest.json",
+  "./icon.png"
 ];
 
 self.addEventListener("install", event => {
@@ -15,6 +16,20 @@ self.addEventListener("install", event => {
       return cache.addAll(urlsToCache);
     })
   );
+  self.skipWaiting();
+});
+
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys
+          .filter(key => key !== CACHE_NAME)
+          .map(key => caches.delete(key))
+      );
+    })
+  );
+  self.clients.claim();
 });
 
 self.addEventListener("fetch", event => {
