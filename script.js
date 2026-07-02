@@ -45,15 +45,15 @@ function zufaelligeKarte(modus, datenArray) {
 }
 
 function schlucke() {
-function schlucke() {
     const zufall = Math.random();
 
-    if (zufall < 0.40) return 1;      // 40%
-    if (zufall < 0.70) return 2;      // 30%
-    if (zufall < 0.90) return 3;      // 20%
-    if (zufall < 0.97) return 4;      // 7%
-    return 5;                         // 3%
-}}
+    if (zufall < 0.40) return 1;
+    if (zufall < 0.70) return 2;
+    if (zufall < 0.90) return 3;
+    if (zufall < 0.97) return 4;
+
+    return 5;
+}
 
 function weiterAktion(normaleAktion) {
   return gemischtAktiv ? "naechsterGemischtModus()" : normaleAktion;
