@@ -45,14 +45,7 @@ function zufaelligeKarte(modus, datenArray) {
 }
 
 function schlucke() {
-    const zufall = Math.random();
-
-    if (zufall < 0.40) return 1;
-    if (zufall < 0.70) return 2;
-    if (zufall < 0.90) return 3;
-    if (zufall < 0.97) return 4;
-
-    return 5;
+  return Math.floor(Math.random() * 3) + 1;
 }
 
 function weiterAktion(normaleAktion) {
