@@ -45,7 +45,7 @@ function zufaelligeKarte(modus, datenArray) {
 }
 
 function schlucke() {
-  return Math.floor(Math.random() * 3) + 1;
+  return Math.floor(Math.random() * 3) + 1; 
 }
 
 function weiterAktion(normaleAktion) {
