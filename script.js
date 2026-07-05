@@ -134,9 +134,28 @@ function menuScreen() {
         <button onclick="aufzaehlModus()">🔁 Aufzählen</button>
         <button onclick="imposterStart()">🕵️ Imposter</button>
         <button onclick="findeDenLuegnerStart()">🤥 Finde den Lügner</button>
+        <button onclick="woerterketteModus()">🔗 Wörterkette</button>
         <button onclick="gemischt()">🎲 Gemischt</button>
       </div>
       <button class="secondary" onclick="spielerScreen()">Spieler ändern</button>
+    </div>
+  `;
+}
+
+function woerterketteModus() {
+  aktuelleKarte = zufaelligeKarte("woerterkette", DATEN.woerterkette);
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>🔗 Wörterkette</h2>
+      <p>Jeder nennt ein Wort, das mit dem vorherigen zusammenhängt.</p>
+      <p>Beispiel:</p>
+      <p>Auto → Reifen → Gummi → Band</p>
+      <div class="big">${aktuelleKarte}</div>
+      <p>Wer nichts mehr weiß oder hängen bleibt trinkt ${schlucke()} Schlücke.</p>
+      <button onclick="${weiterAktion("woerterketteModus()")}">Weiter</button>
+      <button class="secondary" onclick="${weiterAktion("woerterketteModus()")}">Überspringen</button>
+      <button class="secondary" onclick="menuScreen()">Menü</button>
     </div>
   `;
 }
@@ -465,6 +484,7 @@ function naechsterGemischtModus() {
       "schaetzfragen",
       "echtOderLuege",
       "tabu",
+      "woerterkette",
       "pantomime",
       "aufzaehlen",
       "imposter",
@@ -489,6 +509,9 @@ function naechsterGemischtModus() {
     case "echtOderLuege":
       echtOderLuegeModus();
       break;
+      case "woerterkette":
+    woerterketteModus();
+    break;
     case "tabu":
       tabuModus();
       break;
