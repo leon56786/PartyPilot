@@ -20,6 +20,8 @@ const benutzteKarten = {
   imposterSerien: [],
   imposterLänder: [],
   imposterEssen: [],
+  falscherBegriff: [],
+  woerterkette: [],
   imposterBerühmtePersonen: [],
   imposterVideospiele: [],
   imposterTiere: []
@@ -135,9 +137,84 @@ function menuScreen() {
         <button onclick="imposterStart()">🕵️ Imposter</button>
         <button onclick="findeDenLuegnerStart()">🤥 Finde den Lügner</button>
         <button onclick="woerterketteModus()">🔗 Wörterkette</button>
+        <button onclick="falscherBegriffStart()">🧩 Falscher Begriff</button>
         <button onclick="gemischt()">🎲 Gemischt</button>
       </div>
       <button class="secondary" onclick="spielerScreen()">Spieler ändern</button>
+    </div>
+  `;
+}
+
+let falscherBegriffDaten = {};
+let falscherBegriffIndex = 0;
+
+function falscherBegriffStart() {
+  const set = zufaelligeKarte("falscherBegriff", DATEN.falscherBegriff);
+  const falscherSpieler = Math.floor(Math.random() * spieler.length);
+
+  falscherBegriffDaten = {
+    normal: set.normal,
+    falsch: set.falsch,
+    falscherSpieler: falscherSpieler
+  };
+
+  falscherBegriffIndex = 0;
+  falscherBegriffVerdeckt();
+}
+
+function falscherBegriffVerdeckt() {
+  app.innerHTML = `
+    <div class="card">
+      <h2>🧩 Falscher Begriff</h2>
+      <div class="big">Bereit, ${spieler[falscherBegriffIndex]}?</div>
+      <p>Niemand darf dein Wort sehen.</p>
+      <button onclick="falscherBegriffAufdecken()">Aufdecken</button>
+    </div>
+  `;
+}
+
+function falscherBegriffAufdecken() {
+  const wort =
+    falscherBegriffIndex === falscherBegriffDaten.falscherSpieler
+      ? falscherBegriffDaten.falsch
+      : falscherBegriffDaten.normal;
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>${spieler[falscherBegriffIndex]}</h2>
+      <div class="big">${wort}</div>
+      <button onclick="falscherBegriffWeiter()">Nächster Spieler</button>
+    </div>
+  `;
+}
+
+function falscherBegriffWeiter() {
+  falscherBegriffIndex++;
+
+  if (falscherBegriffIndex >= spieler.length) {
+    app.innerHTML = `
+      <div class="card">
+        <h2>Diskussion</h2>
+        <p>Findet heraus, wer den falschen Begriff hatte.</p>
+        <button onclick="falscherBegriffAufloesung()">Auflösung</button>
+      </div>
+    `;
+  } else {
+    falscherBegriffVerdeckt();
+  }
+}
+
+function falscherBegriffAufloesung() {
+  app.innerHTML = `
+    <div class="card">
+      <h2>Auflösung</h2>
+      <div class="big">${spieler[falscherBegriffDaten.falscherSpieler]} hatte den falschen Begriff</div>
+      <p><b>Normal:</b> ${falscherBegriffDaten.normal}</p>
+      <p><b>Falsch:</b> ${falscherBegriffDaten.falsch}</p>
+      <p>Verlierer trinkt ${schlucke()} Schlücke.</p>
+      <button onclick="${weiterAktion("falscherBegriffStart()")}">Weiter</button>
+      <button class="secondary" onclick="falscherBegriffStart()">Neue Runde</button>
+      <button class="secondary" onclick="menuScreen()">Menü</button>
     </div>
   `;
 }
@@ -485,6 +562,7 @@ function naechsterGemischtModus() {
       "echtOderLuege",
       "tabu",
       "woerterkette",
+      "falscherBegriff",
       "pantomime",
       "aufzaehlen",
       "imposter",
@@ -512,6 +590,9 @@ function naechsterGemischtModus() {
       case "woerterkette":
     woerterketteModus();
     break;
+    case "falscherBegriff":
+     falscherBegriffStart();
+     break;
     case "tabu":
       tabuModus();
       break;
