@@ -2061,6 +2061,7 @@ duemmsteFliegt: [
   { frage: "Wie heißt das größte Organ des Menschen?", antwort: "Die Haut" },
   { frage: "Wie viele Knochen hat ein Erwachsener?", antwort: "206" },
   { frage: "Wie viele Kammern hat das Herz?", antwort: "4" },
+  
 
   { frage: "Welches Organ produziert Insulin?", antwort: "Die Bauchspeicheldrüse" },
   { frage: "Welches Blutgefäß transportiert Blut vom Herzen weg?", antwort: "Die Arterie" },
