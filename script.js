@@ -22,7 +22,10 @@ const benutzteKarten = {
   imposterEssen: [],
   falscherBegriff: [],
   woerterkette: [],
+  bombe: [],
+  duemmsteFliegt: [],
   imposterBerühmtePersonen: [],
+  idiotentest: [],
   imposterVideospiele: [],
   imposterTiere: []
 };
@@ -138,6 +141,9 @@ function menuScreen() {
         <button onclick="findeDenLuegnerStart()">🤥 Finde den Lügner</button>
         <button onclick="woerterketteModus()">🔗 Wörterkette</button>
         <button onclick="falscherBegriffStart()">🧩 Falscher Begriff</button>
+        <button onclick="idiotentestModus()">🤓 Idiotentest</button>
+        <button onclick="bombeModus()">💣 Bombe</button>
+        <button onclick="duemmsteFliegtStart()">🏆 Der Dümmste fliegt</button>
         <button onclick="gemischt()">🎲 Gemischt</button>
       </div>
       <button class="secondary" onclick="spielerScreen()">Spieler ändern</button>
@@ -552,6 +558,194 @@ function findeDenLuegnerAufloesung() {
     </div>
   `;
 }
+function idiotentestModus() {
+  aktuelleKarte = zufaelligeKarte("idiotentest", DATEN.idiotentest);
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>🤓 Idiotentest</h2>
+      <div class="big">${aktuelleKarte.frage}</div>
+      <button onclick="idiotentestAntwort()">Antwort anzeigen</button>
+      <button class="secondary" onclick="${weiterAktion("idiotentestModus()")}">Überspringen</button>
+      <button class="secondary" onclick="menuScreen()">Menü</button>
+    </div>
+  `;
+}
+
+function idiotentestAntwort() {
+  app.innerHTML = `
+    <div class="card">
+      <h2>Antwort</h2>
+      <div class="big">${aktuelleKarte.antwort}</div>
+      <p>Wer falsch lag trinkt ${schlucke()} Schlücke.</p>
+      <button onclick="${weiterAktion("idiotentestModus()")}">Weiter</button>
+      <button class="secondary" onclick="menuScreen()">Menü</button>
+    </div>
+  `;
+}
+
+let bombeTimer = null;
+let bombeZeit = 0;
+
+function bombeModus() {
+  aktuelleKarte = zufaelligeKarte("bombe", DATEN.bombe);
+
+  // zufällig zwischen 10 und 90 Sekunden
+  bombeZeit = Math.floor(Math.random() * 81) + 10;
+
+  clearInterval(bombeTimer);
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>💣 Bombe</h2>
+      <p>Reihum Begriffe nennen. Wer dran ist, wenn die Bombe explodiert, trinkt.</p>
+      <div class="big">${aktuelleKarte}</div>
+      <p>Timer läuft geheim zwischen 10 und 90 Sekunden.</p>
+      <button onclick="bombeStart()">Bombe starten</button>
+      <button class="secondary" onclick="${weiterAktion("bombeModus()")}">Überspringen</button>
+      <button class="secondary" onclick="menuScreen()">Menü</button>
+    </div>
+  `;
+}
+
+function bombeStart() {
+  clearInterval(bombeTimer);
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>💣 Bombe läuft!</h2>
+      <p>Sagt reihum Begriffe zur Kategorie:</p>
+      <div class="big">${aktuelleKarte}</div>
+      <p>Gebt das Handy weiter. Timer ist versteckt.</p>
+      <button class="secondary" onclick="bombeAbbrechen()">Abbrechen</button>
+    </div>
+  `;
+
+  bombeTimer = setTimeout(() => {
+    app.innerHTML = `
+      <div class="card">
+        <h2>💥 BOOM!</h2>
+        <div class="big">Die Bombe ist explodiert!</div>
+        <p>Der Spieler am Zug trinkt ${schlucke()} Schlücke.</p>
+        <button onclick="${weiterAktion("bombeModus()")}">Weiter</button>
+        <button class="secondary" onclick="bombeModus()">Neue Bombe</button>
+        <button class="secondary" onclick="menuScreen()">Menü</button>
+      </div>
+    `;
+  }, bombeZeit * 1000);
+}
+
+function bombeAbbrechen() {
+  clearInterval(bombeTimer);
+  bombeModus();
+}
+
+let duemmsteTimer = null;
+let duemmsteZeit = 120;
+let duemmsteSpielerIndex = 0;
+let duemmsteRundenFragen = [];
+
+function duemmsteFliegtStart() {
+  clearInterval(timer);
+  clearInterval(duemmsteTimer);
+
+  duemmsteZeit = 120;
+  duemmsteSpielerIndex = 0;
+  duemmsteRundenFragen = [];
+
+  duemmsteFliegtNaechsteFrage();
+}
+
+function duemmsteFliegtNaechsteFrage() {
+  aktuelleKarte = zufaelligeKarte("duemmsteFliegt", DATEN.duemmsteFliegt);
+
+  const aktuellerSpieler = spieler[duemmsteSpielerIndex];
+
+  duemmsteRundenFragen.push({
+    spieler: aktuellerSpieler,
+    frage: aktuelleKarte.frage,
+    antwort: aktuelleKarte.antwort
+  });
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>🏆 Der Dümmste fliegt</h2>
+      <p>Zeit: <b id="duemmsteTimer">${duemmsteZeit}</b> Sekunden</p>
+      <p>Spieler: <b>${aktuellerSpieler}</b></p>
+      <div class="big">${aktuelleKarte.frage}</div>
+      <button onclick="duemmsteFliegtAntwort()">Antwort anzeigen</button>
+      <button class="secondary" onclick="duemmsteFliegtWeiter()">Weiter ohne Antwort</button>
+      <button class="secondary" onclick="duemmsteFliegtEnde()">Runde beenden</button>
+    </div>
+  `;
+
+  if (!duemmsteTimer) {
+    duemmsteTimer = setInterval(() => {
+      duemmsteZeit--;
+
+      const timerElement = document.getElementById("duemmsteTimer");
+
+      if (timerElement) {
+        timerElement.innerText = duemmsteZeit;
+      }
+
+      if (duemmsteZeit <= 0) {
+        duemmsteFliegtEnde();
+      }
+    }, 1000);
+  }
+}
+
+function duemmsteFliegtAntwort() {
+  app.innerHTML = `
+    <div class="card">
+      <h2>Antwort</h2>
+      <p>Zeit: <b id="duemmsteTimer">${duemmsteZeit}</b> Sekunden</p>
+      <div class="big">${aktuelleKarte.antwort}</div>
+      <p>War die Antwort komplett dumm? Merkt es euch.</p>
+      <button onclick="duemmsteFliegtWeiter()">Nächste Frage</button>
+      <button class="secondary" onclick="duemmsteFliegtEnde()">Runde beenden</button>
+    </div>
+  `;
+}
+
+function duemmsteFliegtWeiter() {
+  duemmsteSpielerIndex++;
+
+  if (duemmsteSpielerIndex >= spieler.length) {
+    duemmsteSpielerIndex = 0;
+  }
+
+  duemmsteFliegtNaechsteFrage();
+}
+
+function duemmsteFliegtEnde() {
+  clearInterval(duemmsteTimer);
+  duemmsteTimer = null;
+
+  const fragenHtml = duemmsteRundenFragen
+    .map(eintrag => `
+      <div class="answer-box">
+        <b>${eintrag.spieler}</b><br>
+        Frage: ${eintrag.frage}<br>
+        Lösung: ${eintrag.antwort}
+      </div>
+    `)
+    .join("");
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>🏆 Runde vorbei</h2>
+      <p>Schaut euch nochmal an, welche Fragen dran kamen.</p>
+      ${fragenHtml}
+      <p><b>Diskutiert jetzt:</b> Wer hatte die dümmste Antwort?</p>
+      <p>Der Verlierer trinkt ${schlucke()} Schlücke.</p>
+      <button onclick="${weiterAktion("duemmsteFliegtStart()")}">Weiter</button>
+      <button class="secondary" onclick="duemmsteFliegtStart()">Neue Runde</button>
+      <button class="secondary" onclick="menuScreen()">Menü</button>
+    </div>
+  `;
+}
 
 function naechsterGemischtModus() {
   if (gemischtDeck.length === 0) {
@@ -566,7 +760,10 @@ function naechsterGemischtModus() {
       "pantomime",
       "aufzaehlen",
       "imposter",
-      "findeDenLuegner"
+      "bombe",
+      "findeDenLuegner",
+      "duemmsteFliegt",
+      "idiotentest"
     ];
 
     gemischtDeck.sort(() => Math.random() - 0.5);
@@ -593,6 +790,12 @@ function naechsterGemischtModus() {
     case "falscherBegriff":
      falscherBegriffStart();
      break;
+     case "bombe":
+  bombeModus();
+  break;
+  case "duemmsteFliegt":
+  duemmsteFliegtStart();
+  break;
     case "tabu":
       tabuModus();
       break;
@@ -605,6 +808,9 @@ function naechsterGemischtModus() {
     case "imposter":
       imposterStart();
       break;
+      case "idiotentest":
+       idiotentestModus();
+       break;
     case "findeDenLuegner":
       findeDenLuegnerStart();
       break;
