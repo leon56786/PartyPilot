@@ -4,6 +4,11 @@ let timer = null;
 let zeit = 60;
 let gemischtDeck = [];
 let gemischtAktiv = false;
+let rundenTimer = null;
+let rundenZeit = 60;
+let rundenPunkte = 0;
+let rundenTyp = "";
+let spielerDranIndex = 0;
 
 const app = document.getElementById("app");
 
@@ -127,6 +132,7 @@ function menuScreen() {
   if (inputs.length > 0) {
     if (!getSpieler()) return;
   }
+spielerDranIndex = 0;
 
   app.innerHTML = `
     <div class="card">
@@ -153,6 +159,49 @@ function menuScreen() {
       <button class="secondary" onclick="spielerScreen()">Spieler ändern</button>
     </div>
   `;
+}
+function weiterAktion(normaleAktion) {
+  return gemischtAktiv ? "naechsterGemischtModus()" : normaleAktion;
+}
+
+function spielerDran() {
+  if (spieler.length === 0) return "Spieler";
+  return spieler[spielerDranIndex % spieler.length];
+}
+
+function naechsterSpielerDran() {
+  if (spieler.length === 0) return;
+
+  spielerDranIndex++;
+
+  if (spielerDranIndex >= spieler.length) {
+    spielerDranIndex = 0;
+  }
+}
+
+function weiterMitSpieler(normaleAktion) {
+  const aktion = gemischtAktiv ? "naechsterGemischtModus()" : normaleAktion;
+  return `spielerWeiterUndAktion('${aktion}')`;
+}
+
+function spielerWeiterUndAktion(aktion) {
+  naechsterSpielerDran();
+
+  if (aktion === "naechsterGemischtModus()") {
+    naechsterGemischtModus();
+  } else if (aktion === "woerterketteModus()") {
+    woerterketteModus();
+  } else if (aktion === "reimeModus()") {
+    reimeModus();
+  } else if (aktion === "aufzaehlModus()") {
+    aufzaehlModus();
+  } else if (aktion === "bombeModus()") {
+    bombeModus();
+  } else if (aktion === "tabuModus()") {
+    tabuModus();
+  } else if (aktion === "pantomimeModus()") {
+    pantomimeModus();
+  }
 }
 
 function zweiLuegenEineWahrheitModus() {
@@ -283,12 +332,13 @@ function reimeModus() {
   app.innerHTML = `
     <div class="card">
       <h2>🎤 Reime</h2>
+      <p>Dran ist: <b>${spielerDran()}</b></p>
       <p>Reihum muss jeder ein Wort sagen, das sich reimt.</p>
       <p>Beispiel: Haus → Maus → raus → Applaus</p>
       <div class="big">Reime auf: ${aktuelleKarte}</div>
       <p>Wer nichts mehr weiß, zu lange braucht oder ein falsches Wort sagt, trinkt ${schlucke()} Schlücke.</p>
-      <button onclick="${weiterAktion("reimeModus()")}">Weiter</button>
-      <button class="secondary" onclick="${weiterAktion("reimeModus()")}">Überspringen</button>
+      <button onclick="${weiterMitSpieler("reimeModus()")}">Weiter</button>
+      <button class="secondary" onclick="${weiterMitSpieler("reimeModus()")}">Überspringen</button>
       <button class="secondary" onclick="menuScreen()">Menü</button>
     </div>
   `;
@@ -300,13 +350,14 @@ function woerterketteModus() {
   app.innerHTML = `
     <div class="card">
       <h2>🔗 Wörterkette</h2>
+      <p>Dran ist: <b>${spielerDran()}</b></p>
       <p>Jeder nennt ein Wort, das mit dem vorherigen zusammenhängt.</p>
       <p>Beispiel:</p>
       <p>Auto → Reifen → Gummi → Band</p>
       <div class="big">${aktuelleKarte}</div>
       <p>Wer nichts mehr weiß oder hängen bleibt trinkt ${schlucke()} Schlücke.</p>
-      <button onclick="${weiterAktion("woerterketteModus()")}">Weiter</button>
-      <button class="secondary" onclick="${weiterAktion("woerterketteModus()")}">Überspringen</button>
+      <button onclick="${weiterMitSpieler("woerterketteModus()")}">Weiter</button>
+      <button class="secondary" onclick="${weiterMitSpieler("woerterketteModus()")}">Überspringen</button>
       <button class="secondary" onclick="menuScreen()">Menü</button>
     </div>
   `;
@@ -380,61 +431,188 @@ function echtOderLuegeAntwort() {
 }
 
 function tabuModus() {
-  aktuelleKarte = zufaelligeKarte("tabu", DATEN.tabu);
-  zeit = 60;
+  rundenTyp = "tabu";
+  rundenZeit = 60;
+  rundenPunkte = 0;
+
   clearInterval(timer);
+  clearInterval(rundenTimer);
+  rundenTimer = null;
 
   app.innerHTML = `
     <div class="card">
       <h2>🗣️ Tabu</h2>
-      <p>Erkläre das Wort ohne die verbotenen Begriffe.</p>
-      <div class="big">${aktuelleKarte.wort}</div>
-      <p>Verboten: ${aktuelleKarte.verboten.join(", ")}</p>
-      <div class="timer" id="timer">60</div>
-      <button onclick="startTimer()">Timer starten</button>
-      <button onclick="${weiterAktion("tabuModus()")}">Weiter</button>
-      <button class="secondary" onclick="${weiterAktion("tabuModus()")}">Überspringen</button>
+
+      <p>Dran ist: <b>${spielerDran()}</b></p>
+
+      <p>Erkläre so viele Wörter wie möglich in 60 Sekunden.</p>
+      <p>Du darfst die verbotenen Wörter nicht sagen.</p>
+      <p>Pro richtig erratenem Wort dürft ihr 1 Schluck verteilen.</p>
+
+      <button onclick="tabuRundeStarten()">Timer starten</button>
       <button class="secondary" onclick="menuScreen()">Menü</button>
     </div>
   `;
 }
 
+function tabuRundeStarten() {
+  clearInterval(rundenTimer);
+
+  tabuNaechstesWort();
+
+  rundenTimer = setInterval(() => {
+    rundenZeit--;
+
+    const timerElement = document.getElementById("rundenTimer");
+
+    if (timerElement) {
+      timerElement.innerText = rundenZeit;
+    }
+
+    if (rundenZeit <= 0) {
+      tabuPantomimeEnde();
+    }
+  }, 1000);
+}
+
+function tabuNaechstesWort() {
+  aktuelleKarte = zufaelligeKarte("tabu", DATEN.tabu);
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>🗣️ Tabu</h2>
+
+      <p>Dran ist: <b>${spielerDran()}</b></p>
+      <p>Zeit: <b id="rundenTimer">${rundenZeit}</b> Sekunden</p>
+      <p>Richtig erraten: <b>${rundenPunkte}</b></p>
+
+      <div class="big">${aktuelleKarte.wort}</div>
+
+      <p><b>Verboten:</b> ${aktuelleKarte.verboten.join(", ")}</p>
+
+      <button onclick="tabuRichtig()">Richtig erraten</button>
+      <button class="secondary" onclick="tabuNaechstesWort()">Skippen</button>
+      <button class="secondary" onclick="tabuPantomimeEnde()">Runde beenden</button>
+    </div>
+  `;
+}
+
+function tabuRichtig() {
+  rundenPunkte++;
+  tabuNaechstesWort();
+}
+
 function pantomimeModus() {
-  aktuelleKarte = zufaelligeKarte("pantomime", DATEN.pantomime);
-  zeit = 90;
+  rundenTyp = "pantomime";
+  rundenZeit = 90;
+  rundenPunkte = 0;
+
   clearInterval(timer);
+  clearInterval(rundenTimer);
+  rundenTimer = null;
 
   app.innerHTML = `
     <div class="card">
       <h2>🎭 Pantomime</h2>
-      <p>Stelle den Begriff ohne Worte dar.</p>
-      <div class="big">${aktuelleKarte}</div>
-      <div class="timer" id="timer">90</div>
-      <button onclick="startTimer()">Timer starten</button>
-      <button onclick="${weiterAktion("pantomimeModus()")}">Weiter</button>
-      <button class="secondary" onclick="${weiterAktion("pantomimeModus()")}">Überspringen</button>
+
+      <p>Dran ist: <b>${spielerDran()}</b></p>
+
+      <p>Stelle so viele Begriffe wie möglich in 90 Sekunden dar.</p>
+      <p>Du darfst nicht sprechen.</p>
+      <p>Pro richtig erratenem Begriff dürft ihr 1 Schluck verteilen.</p>
+
+      <button onclick="pantomimeRundeStarten()">Timer starten</button>
       <button class="secondary" onclick="menuScreen()">Menü</button>
     </div>
   `;
 }
 
-function startTimer() {
-  clearInterval(timer);
+function pantomimeRundeStarten() {
+  clearInterval(rundenTimer);
 
-  timer = setInterval(() => {
-    zeit--;
+  pantomimeNaechstesWort();
 
-    const timerElement = document.getElementById("timer");
+  rundenTimer = setInterval(() => {
+    rundenZeit--;
+
+    const timerElement = document.getElementById("rundenTimer");
 
     if (timerElement) {
-      timerElement.innerText = zeit;
+      timerElement.innerText = rundenZeit;
     }
 
-    if (zeit <= 0) {
-      clearInterval(timer);
-      alert("Zeit vorbei! Verlierer trinkt " + schlucke() + " Schlücke.");
+    if (rundenZeit <= 0) {
+      tabuPantomimeEnde();
     }
   }, 1000);
+}
+
+function pantomimeNaechstesWort() {
+  aktuelleKarte = zufaelligeKarte("pantomime", DATEN.pantomime);
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>🎭 Pantomime</h2>
+
+      <p>Dran ist: <b>${spielerDran()}</b></p>
+      <p>Zeit: <b id="rundenTimer">${rundenZeit}</b> Sekunden</p>
+      <p>Richtig erraten: <b>${rundenPunkte}</b></p>
+
+      <div class="big">${aktuelleKarte}</div>
+
+      <p>Stelle den Begriff ohne Worte dar.</p>
+
+      <button onclick="pantomimeRichtig()">Richtig erraten</button>
+      <button class="secondary" onclick="pantomimeNaechstesWort()">Skippen</button>
+      <button class="secondary" onclick="tabuPantomimeEnde()">Runde beenden</button>
+    </div>
+  `;
+}
+
+function pantomimeRichtig() {
+  rundenPunkte++;
+  pantomimeNaechstesWort();
+}
+
+function tabuPantomimeEnde() {
+  clearInterval(rundenTimer);
+  rundenTimer = null;
+
+  const titel = rundenTyp === "tabu" ? "🗣️ Tabu" : "🎭 Pantomime";
+  const neustart = rundenTyp === "tabu" ? "tabuModus()" : "pantomimeModus()";
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>${titel} vorbei</h2>
+
+      <p>Dran war: <b>${spielerDran()}</b></p>
+
+      <div class="big">${rundenPunkte} richtig erraten</div>
+
+      <p>Du darfst insgesamt <b>${rundenPunkte} Schlücke</b> verteilen.</p>
+
+      <button onclick="tabuPantomimeWeiter('${neustart}')">Weiter</button>
+      <button class="secondary" onclick="${neustart}">Gleicher Spieler nochmal</button>
+      <button class="secondary" onclick="menuScreen()">Menü</button>
+    </div>
+  `;
+}
+
+function tabuPantomimeWeiter(neustart) {
+  naechsterSpielerDran();
+
+  if (gemischtAktiv) {
+    naechsterGemischtModus();
+    return;
+  }
+
+  if (neustart === "tabuModus()") {
+    tabuModus();
+  }
+
+  if (neustart === "pantomimeModus()") {
+    pantomimeModus();
+  }
 }
 
 function aufzaehlModus() {
@@ -443,11 +621,12 @@ function aufzaehlModus() {
   app.innerHTML = `
     <div class="card">
       <h2>🔁 Aufzähl-Modus</h2>
+      <p>Dran ist: <b>${spielerDran()}</b></p>
       <p>Reihum aufzählen. Wer doppelt sagt oder nichts weiß, verliert.</p>
       <div class="big">${aktuelleKarte}</div>
       <p>Gewinner verteilt ${schlucke()} Schlücke.</p>
-      <button onclick="${weiterAktion("aufzaehlModus()")}">Weiter</button>
-      <button class="secondary" onclick="${weiterAktion("aufzaehlModus()")}">Überspringen</button>
+      <button onclick="${weiterMitSpieler("aufzaehlModus()")}">Weiter</button>
+      <button class="secondary" onclick="${weiterMitSpieler("aufzaehlModus()")}">Überspringen</button>
       <button class="secondary" onclick="menuScreen()">Menü</button>
     </div>
   `;
@@ -659,7 +838,6 @@ let bombeZeit = 0;
 function bombeModus() {
   aktuelleKarte = zufaelligeKarte("bombe", DATEN.bombe);
 
-  // zufällig zwischen 10 und 90 Sekunden
   bombeZeit = Math.floor(Math.random() * 81) + 10;
 
   clearInterval(bombeTimer);
@@ -667,11 +845,12 @@ function bombeModus() {
   app.innerHTML = `
     <div class="card">
       <h2>💣 Bombe</h2>
+      <p>Dran ist: <b>${spielerDran()}</b></p>
       <p>Reihum Begriffe nennen. Wer dran ist, wenn die Bombe explodiert, trinkt.</p>
       <div class="big">${aktuelleKarte}</div>
       <p>Timer läuft geheim zwischen 10 und 90 Sekunden.</p>
       <button onclick="bombeStart()">Bombe starten</button>
-      <button class="secondary" onclick="${weiterAktion("bombeModus()")}">Überspringen</button>
+      <button class="secondary" onclick="${weiterMitSpieler("bombeModus()")}">Überspringen</button>
       <button class="secondary" onclick="menuScreen()">Menü</button>
     </div>
   `;
@@ -683,6 +862,7 @@ function bombeStart() {
   app.innerHTML = `
     <div class="card">
       <h2>💣 Bombe läuft!</h2>
+      <p>Dran ist: <b>${spielerDran()}</b></p>
       <p>Sagt reihum Begriffe zur Kategorie:</p>
       <div class="big">${aktuelleKarte}</div>
       <p>Gebt das Handy weiter. Timer ist versteckt.</p>
@@ -695,9 +875,10 @@ function bombeStart() {
       <div class="card">
         <h2>💥 BOOM!</h2>
         <div class="big">Die Bombe ist explodiert!</div>
-        <p>Der Spieler am Zug trinkt ${schlucke()} Schlücke.</p>
-        <button onclick="${weiterAktion("bombeModus()")}">Weiter</button>
-        <button class="secondary" onclick="bombeModus()">Neue Bombe</button>
+        <p><b>${spielerDran()}</b> war dran.</p>
+        <p>${spielerDran()} trinkt ${schlucke()} Schlücke.</p>
+        <button onclick="${weiterMitSpieler("bombeModus()")}">Weiter</button>
+        <button class="secondary" onclick="${weiterMitSpieler("bombeModus()")}">Neue Bombe</button>
         <button class="secondary" onclick="menuScreen()">Menü</button>
       </div>
     `;
