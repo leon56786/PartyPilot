@@ -22,8 +22,10 @@ const benutzteKarten = {
   imposterEssen: [],
   falscherBegriff: [],
   woerterkette: [],
+  zweiLuegenEineWahrheit: [],
   bombe: [],
   duemmsteFliegt: [],
+  reime: [],
   imposterBerühmtePersonen: [],
   idiotentest: [],
   imposterVideospiele: [],
@@ -144,9 +146,59 @@ function menuScreen() {
         <button onclick="idiotentestModus()">🤓 Idiotentest</button>
         <button onclick="bombeModus()">💣 Bombe</button>
         <button onclick="duemmsteFliegtStart()">🏆 Der Dümmste fliegt</button>
+        <button onclick="reimeModus()">🎤 Reime</button>
+        <button onclick="zweiLuegenEineWahrheitModus()">🕵️ 2 Lügen 1 Wahrheit</button>
         <button onclick="gemischt()">🎲 Gemischt</button>
       </div>
       <button class="secondary" onclick="spielerScreen()">Spieler ändern</button>
+    </div>
+  `;
+}
+
+function zweiLuegenEineWahrheitModus() {
+  aktuelleKarte = zufaelligeKarte("zweiLuegenEineWahrheit", DATEN.zweiLuegenEineWahrheit);
+
+  const optionen = [
+    { text: aktuelleKarte.wahrheit, richtig: true },
+    { text: aktuelleKarte.luegen[0], richtig: false },
+    { text: aktuelleKarte.luegen[1], richtig: false }
+  ];
+
+  optionen.sort(() => Math.random() - 0.5);
+
+  aktuelleKarte.optionen = optionen;
+
+  const optionenHtml = optionen
+    .map((option, index) => `
+      <button onclick="zweiLuegenEineWahrheitAntwort(${index})">
+        ${index + 1}. ${option.text}
+      </button>
+    `)
+    .join("");
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>🕵️ 2 Lügen 1 Wahrheit</h2>
+      <p>Welche Story ist wahr?</p>
+      ${optionenHtml}
+      <button class="secondary" onclick="${weiterAktion("zweiLuegenEineWahrheitModus()")}">Überspringen</button>
+      <button class="secondary" onclick="menuScreen()">Menü</button>
+    </div>
+  `;
+}
+
+function zweiLuegenEineWahrheitAntwort(index) {
+  const option = aktuelleKarte.optionen[index];
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>Auflösung</h2>
+      <div class="big">${option.richtig ? "✅ Richtig" : "❌ Falsch"}</div>
+      <p><b>Wahr war:</b></p>
+      <p>${aktuelleKarte.wahrheit}</p>
+      <p>Wer falsch lag trinkt ${schlucke()} Schlücke.</p>
+      <button onclick="${weiterAktion("zweiLuegenEineWahrheitModus()")}">Weiter</button>
+      <button class="secondary" onclick="menuScreen()">Menü</button>
     </div>
   `;
 }
@@ -220,6 +272,23 @@ function falscherBegriffAufloesung() {
       <p>Verlierer trinkt ${schlucke()} Schlücke.</p>
       <button onclick="${weiterAktion("falscherBegriffStart()")}">Weiter</button>
       <button class="secondary" onclick="falscherBegriffStart()">Neue Runde</button>
+      <button class="secondary" onclick="menuScreen()">Menü</button>
+    </div>
+  `;
+}
+
+function reimeModus() {
+  aktuelleKarte = zufaelligeKarte("reime", DATEN.reime);
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>🎤 Reime</h2>
+      <p>Reihum muss jeder ein Wort sagen, das sich reimt.</p>
+      <p>Beispiel: Haus → Maus → raus → Applaus</p>
+      <div class="big">Reime auf: ${aktuelleKarte}</div>
+      <p>Wer nichts mehr weiß, zu lange braucht oder ein falsches Wort sagt, trinkt ${schlucke()} Schlücke.</p>
+      <button onclick="${weiterAktion("reimeModus()")}">Weiter</button>
+      <button class="secondary" onclick="${weiterAktion("reimeModus()")}">Überspringen</button>
       <button class="secondary" onclick="menuScreen()">Menü</button>
     </div>
   `;
@@ -746,7 +815,40 @@ function duemmsteFliegtEnde() {
     </div>
   `;
 }
+function zufaelligerSpieler() {
+  return spieler[Math.floor(Math.random() * spieler.length)];
+}
 
+function gemischtAktionModus() {
+  const spieler1 = zufaelligerSpieler();
+  const spieler2 = zufaelligerSpieler();
+
+  const aktionen = [
+    `${spieler1} trinkt 2 Schlücke.`,
+    `${spieler1} trinkt ${schlucke()} Schlücke.`,
+    `${spieler1} darf ${schlucke()} Schlücke verteilen.`,
+    `${spieler1} darf aussuchen, wer trinken muss.`,
+    `${spieler1} darf eine Person bestimmen, die 2 Schlücke trinkt.`,
+    `${spieler1} und ${spieler2} trinken beide ${schlucke()} Schlücke.`,
+    `Alle trinken 1 Schluck.`,
+    `Alle trinken 2 Schlücke.`,
+    `Alle außer ${spieler1} trinken 1 Schluck.`,
+    `${spieler1} ist sicher. Alle anderen trinken 1 Schluck.`,
+    `${spieler1} verteilt 3 Schlücke.`,
+    `${spieler1} sucht jemanden aus. Diese Person trinkt ${schlucke()} Schlücke.`
+  ];
+
+  const aktion = aktionen[Math.floor(Math.random() * aktionen.length)];
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>🎲 Gemischt-Aktion</h2>
+      <div class="big">${aktion}</div>
+      <button onclick="naechsterGemischtModus()">Weiter</button>
+      <button class="secondary" onclick="menuScreen()">Menü</button>
+    </div>
+  `;
+}
 function naechsterGemischtModus() {
   if (gemischtDeck.length === 0) {
     gemischtDeck = [
@@ -762,7 +864,12 @@ function naechsterGemischtModus() {
       "imposter",
       "bombe",
       "findeDenLuegner",
+       "reime",
+       "zweiLuegenEineWahrheit",
       "duemmsteFliegt",
+      "gemischtAktion",
+      "gemischtAktion",
+      "gemischtAktion",
       "idiotentest"
     ];
 
@@ -781,6 +888,12 @@ function naechsterGemischtModus() {
     case "schaetzfragen":
       quizModus("schaetzfragen");
       break;
+      case "gemischtAktion":
+    gemischtAktionModus();
+    break;
+    case "zweiLuegenEineWahrheit":
+  zweiLuegenEineWahrheitModus();
+  break;
     case "echtOderLuege":
       echtOderLuegeModus();
       break;
@@ -808,6 +921,9 @@ function naechsterGemischtModus() {
     case "imposter":
       imposterStart();
       break;
+      case "reime":
+  reimeModus();
+  break;
       case "idiotentest":
        idiotentestModus();
        break;

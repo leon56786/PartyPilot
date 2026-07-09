@@ -120,6 +120,769 @@ const DATEN = {
   "Alle außer dem Spieler mit dem längsten Namen trinken.",
   "Alle trinken 2 Schlücke."
 ],
+reime: [
+  "Haus",
+  "Maus",
+  "Auto",
+  "Bier",
+  "Licht",
+  "Nacht",
+  "Baum",
+  "Zeit",
+  "Hand",
+  "Wasser",
+  "Feuer",
+  "Stein",
+  "Herz",
+  "Straße",
+  "Ball",
+  "Sonne",
+  "Mond",
+  "Tisch",
+  "Stuhl",
+  "Schule",
+  "Freund",
+  "Geld",
+  "Spiel",
+  "Musik",
+  "Kopf",
+  "Meer",
+  "Berg",
+  "Tür",
+  "Bett",
+  "Kaffee",
+  "Pizza",
+  "Hund",
+  "Katze",
+  "Regen",
+  "Schnee",
+  "Glas",
+  "Flasche",
+  "Hose",
+  "Schuh",
+  "Jacke",
+  "Uhr",
+  "Park",
+  "Stadt",
+  "Film",
+  "Lied",
+  "Tanz",
+  "Traum",
+  "Welt",
+  "Tag",
+  "Nacht"
+],
+zweiLuegenEineWahrheit: [
+  {
+    wahrheit: "Ein Mann rief die Polizei, weil seine Pizza zu spät geliefert wurde.",
+    luegen: [
+      "Ein Mann rief die Feuerwehr, weil sein Döner zu scharf war.",
+      "Eine Frau verklagte ihren Kühlschrank, weil er zu laut geschnarcht hat."
+    ]
+  },
+  {
+    wahrheit: "Ketchup wurde früher teilweise als Medizin verkauft.",
+    luegen: [
+      "Mayonnaise wurde früher als Sonnencreme verkauft.",
+      "Senf wurde früher als Zahnpasta benutzt."
+    ]
+  },
+  {
+    wahrheit: "Oktopusse haben drei Herzen.",
+    luegen: [
+      "Haie haben sieben Herzen.",
+      "Pinguine haben zwei Herzen."
+    ]
+  },
+  {
+    wahrheit: "Der Eiffelturm ist im Sommer etwas höher als im Winter.",
+    luegen: [
+      "Der Eiffelturm dreht sich nachts leicht nach Westen.",
+      "Der Eiffelturm schrumpft bei Regen um zwei Meter."
+    ]
+  },
+  {
+    wahrheit: "Die erste Webcam überwachte eine Kaffeemaschine.",
+    luegen: [
+      "Die erste Webcam überwachte einen Hamsterkäfig.",
+      "Die erste Webcam zeigte dauerhaft einen leeren Parkplatz."
+    ]
+  },
+  {
+    wahrheit: "Bluetooth wurde nach einem Wikingerkönig benannt.",
+    luegen: [
+      "WLAN wurde nach einem Piraten benannt.",
+      "USB wurde nach einem römischen Kaiser benannt."
+    ]
+  },
+  {
+    wahrheit: "In Finnland gibt es Wettbewerbe im Handyweitwurf.",
+    luegen: [
+      "In Schweden gibt es offizielle Meisterschaften im Kühlschranktragen.",
+      "In Norwegen gibt es eine Liga für Staubsauger-Rennen."
+    ]
+  },
+  {
+    wahrheit: "Schnecken können sehr lange schlafen.",
+    luegen: [
+      "Ameisen schlafen immer genau acht Stunden.",
+      "Frösche schlafen grundsätzlich im Stehen."
+    ]
+  },
+  {
+    wahrheit: "Bienen können menschliche Gesichter erkennen.",
+    luegen: [
+      "Mücken können Autokennzeichen erkennen.",
+      "Fliegen können Handys entsperren."
+    ]
+  },
+  {
+    wahrheit: "Kühe können beste Freunde haben.",
+    luegen: [
+      "Schafe wählen jedes Jahr einen Bürgermeister.",
+      "Ziegen erkennen Markenklamotten."
+    ]
+  },
+
+  {
+    wahrheit: "Ein Mann kommentierte seinen eigenen Fahndungsaufruf auf Facebook.",
+    luegen: [
+      "Ein Dieb schrieb der Polizei eine Bewertung mit zwei Sternen.",
+      "Ein Einbrecher fragte auf Instagram nach Tipps zum Fliehen."
+    ]
+  },
+  {
+    wahrheit: "Ein Papagei wurde schon als möglicher Zeuge in einem Fall erwähnt.",
+    luegen: [
+      "Ein Goldfisch musste vor Gericht aussagen.",
+      "Ein Hamster identifizierte einen Bankräuber."
+    ]
+  },
+  {
+    wahrheit: "Der menschliche Körper besitzt bei der Geburt mehr Knochen als im Erwachsenenalter.",
+    luegen: [
+      "Menschen haben bei der Geburt weniger Knochen als später.",
+      "Knochen verschwinden nachts und wachsen morgens nach."
+    ]
+  },
+  {
+    wahrheit: "Die Sonne macht fast die gesamte Masse unseres Sonnensystems aus.",
+    luegen: [
+      "Der Mond ist schwerer als alle Planeten zusammen.",
+      "Jupiter macht 90 Prozent der Masse der Milchstraße aus."
+    ]
+  },
+  {
+    wahrheit: "Der Mond entfernt sich jedes Jahr ein kleines Stück von der Erde.",
+    luegen: [
+      "Der Mond kommt jedes Jahr einen Kilometer näher.",
+      "Der Mond bleibt immer exakt gleich weit entfernt."
+    ]
+  },
+  {
+    wahrheit: "Ein Tag auf der Venus dauert länger als ein Venusjahr.",
+    luegen: [
+      "Ein Tag auf dem Mars dauert genau ein Jahr.",
+      "Auf dem Jupiter dauert ein Tag 365 Erdentage."
+    ]
+  },
+  {
+    wahrheit: "Google hieß am Anfang BackRub.",
+    luegen: [
+      "Google hieß am Anfang BananaSearch.",
+      "Google hieß am Anfang InternetFinder3000."
+    ]
+  },
+  {
+    wahrheit: "Die PlayStation sollte ursprünglich mit Nintendo zusammenhängen.",
+    luegen: [
+      "Die Xbox war ursprünglich ein Toaster-Projekt.",
+      "Die Nintendo Switch sollte erst ein Taschenrechner werden."
+    ]
+  },
+  {
+    wahrheit: "Das erste YouTube-Video zeigt einen Mann im Zoo.",
+    luegen: [
+      "Das erste YouTube-Video zeigt einen Autounfall.",
+      "Das erste YouTube-Video war ein Musikvideo von Eminem."
+    ]
+  },
+  {
+    wahrheit: "Menschen blinzeln normalerweise viele Male pro Minute.",
+    luegen: [
+      "Menschen blinzeln nur einmal pro Stunde.",
+      "Menschen blinzeln im Schlaf dauerhaft."
+    ]
+  },
+
+  {
+    wahrheit: "Der kleinste Knochen des Körpers sitzt im Ohr.",
+    luegen: [
+      "Der kleinste Knochen sitzt im kleinen Zeh.",
+      "Der kleinste Knochen sitzt in der Nase."
+    ]
+  },
+  {
+    wahrheit: "Diamant ist eines der härtesten natürlichen Materialien.",
+    luegen: [
+      "Gummi ist härter als Diamant.",
+      "Papier ist härter als Stahl."
+    ]
+  },
+  {
+    wahrheit: "Ein elektrischer Zug produziert keinen Rauch wie eine Dampflok.",
+    luegen: [
+      "Ein elektrischer Zug raucht nur bei Vollmond.",
+      "Ein elektrischer Zug raucht nur bergauf."
+    ]
+  },
+  {
+    wahrheit: "Eine Pizza im Karton kann rund und eckig gleichzeitig wirken.",
+    luegen: [
+      "Eine Pizza ist offiziell ein Dreieck.",
+      "Eine Pizza darf in Italien nicht rund sein."
+    ]
+  },
+  {
+    wahrheit: "Der Burj Khalifa ist über 800 Meter hoch.",
+    luegen: [
+      "Der Burj Khalifa ist kleiner als der Kölner Dom.",
+      "Der Burj Khalifa steht in Kanada."
+    ]
+  },
+  {
+    wahrheit: "Ein normales Fußballspiel dauert 90 Minuten ohne Nachspielzeit.",
+    luegen: [
+      "Ein normales Fußballspiel dauert 120 Minuten ohne Verlängerung.",
+      "Ein normales Fußballspiel dauert 45 Minuten insgesamt."
+    ]
+  },
+  {
+    wahrheit: "Ein Basketballkorb hängt etwa 3,05 Meter hoch.",
+    luegen: [
+      "Ein Basketballkorb hängt genau 5 Meter hoch.",
+      "Ein Basketballkorb hängt auf jeder Seite unterschiedlich hoch."
+    ]
+  },
+  {
+    wahrheit: "Ein Marathon ist ungefähr 42,195 Kilometer lang.",
+    luegen: [
+      "Ein Marathon ist genau 50 Kilometer lang.",
+      "Ein Marathon ist nur 21 Kilometer lang."
+    ]
+  },
+  {
+    wahrheit: "Ein Mensch hat normalerweise 32 Zähne im Erwachsenenalter.",
+    luegen: [
+      "Ein Mensch hat normalerweise 44 Zähne.",
+      "Ein Mensch hat normalerweise 18 Zähne."
+    ]
+  },
+  {
+    wahrheit: "Ein erwachsener Mensch hat ungefähr 206 Knochen.",
+    luegen: [
+      "Ein erwachsener Mensch hat ungefähr 406 Knochen.",
+      "Ein erwachsener Mensch hat ungefähr 90 Knochen."
+    ]
+  },
+
+  {
+    wahrheit: "Die Erde ist am Äquator etwas dicker als an den Polen.",
+    luegen: [
+      "Die Erde ist ein perfekter Würfel.",
+      "Die Erde ist an den Polen breiter als am Äquator."
+    ]
+  },
+  {
+    wahrheit: "Saturn hat ein auffälliges Ringsystem.",
+    luegen: [
+      "Mars hat größere Ringe als Saturn.",
+      "Merkur hat sichtbare Ringe aus Eis."
+    ]
+  },
+  {
+    wahrheit: "Neptun wurde durch Berechnungen vorhergesagt, bevor er direkt beobachtet wurde.",
+    luegen: [
+      "Neptun wurde von einem Piratenschiff entdeckt.",
+      "Neptun wurde zuerst auf einem Handyfoto gesehen."
+    ]
+  },
+  {
+    wahrheit: "Auf der Venus geht die Sonne anders auf als auf der Erde.",
+    luegen: [
+      "Auf der Venus gibt es jeden Tag Schneestürme aus Zucker.",
+      "Auf der Venus gibt es keine Sonne."
+    ]
+  },
+  {
+    wahrheit: "Licht braucht von der Sonne zur Erde ungefähr acht Minuten.",
+    luegen: [
+      "Licht braucht von der Sonne zur Erde einen ganzen Tag.",
+      "Licht braucht von der Sonne zur Erde nur eine Millisekunde."
+    ]
+  },
+  {
+    wahrheit: "Der Pazifik ist der größte Ozean.",
+    luegen: [
+      "Der Rhein ist der größte Ozean.",
+      "Das Mittelmeer ist größer als alle Ozeane zusammen."
+    ]
+  },
+  {
+    wahrheit: "Die Antarktis ist eine sehr große Wüste.",
+    luegen: [
+      "Die Antarktis ist ein tropischer Regenwald.",
+      "Die Antarktis liegt direkt neben Italien."
+    ]
+  },
+  {
+    wahrheit: "Die Sahara ist die größte heiße Wüste.",
+    luegen: [
+      "Die Sahara liegt in Deutschland.",
+      "Die Sahara besteht hauptsächlich aus Eisbergen."
+    ]
+  },
+  {
+    wahrheit: "Der Rhein fließt durch Köln.",
+    luegen: [
+      "Der Amazonas fließt durch Karlsruhe.",
+      "Die Donau fließt durch New York."
+    ]
+  },
+  {
+    wahrheit: "London liegt an der Themse.",
+    luegen: [
+      "London liegt am Nil.",
+      "London liegt an der Wolga."
+    ]
+  },
+
+  {
+    wahrheit: "Berlin ist die Hauptstadt von Deutschland.",
+    luegen: [
+      "München ist die Hauptstadt von Deutschland.",
+      "Hamburg ist die Hauptstadt von Deutschland."
+    ]
+  },
+  {
+    wahrheit: "Madrid ist die Hauptstadt von Spanien.",
+    luegen: [
+      "Barcelona ist die Hauptstadt von Spanien.",
+      "Sevilla ist die Hauptstadt von Spanien."
+    ]
+  },
+  {
+    wahrheit: "Rom ist die Hauptstadt von Italien.",
+    luegen: [
+      "Mailand ist die Hauptstadt von Italien.",
+      "Venedig ist die Hauptstadt von Italien."
+    ]
+  },
+  {
+    wahrheit: "Paris ist die Hauptstadt von Frankreich.",
+    luegen: [
+      "Lyon ist die Hauptstadt von Frankreich.",
+      "Marseille ist die Hauptstadt von Frankreich."
+    ]
+  },
+  {
+    wahrheit: "Wien ist die Hauptstadt von Österreich.",
+    luegen: [
+      "Salzburg ist die Hauptstadt von Österreich.",
+      "Graz ist die Hauptstadt von Österreich."
+    ]
+  },
+  {
+    wahrheit: "Bern ist die Hauptstadt der Schweiz.",
+    luegen: [
+      "Zürich ist die Hauptstadt der Schweiz.",
+      "Genf ist die Hauptstadt der Schweiz."
+    ]
+  },
+  {
+    wahrheit: "Ottawa ist die Hauptstadt von Kanada.",
+    luegen: [
+      "Toronto ist die Hauptstadt von Kanada.",
+      "Vancouver ist die Hauptstadt von Kanada."
+    ]
+  },
+  {
+    wahrheit: "Canberra ist die Hauptstadt von Australien.",
+    luegen: [
+      "Sydney ist die Hauptstadt von Australien.",
+      "Melbourne ist die Hauptstadt von Australien."
+    ]
+  },
+  {
+    wahrheit: "Ankara ist die Hauptstadt der Türkei.",
+    luegen: [
+      "Istanbul ist die Hauptstadt der Türkei.",
+      "Izmir ist die Hauptstadt der Türkei."
+    ]
+  },
+  {
+    wahrheit: "Brasília ist die Hauptstadt von Brasilien.",
+    luegen: [
+      "Rio de Janeiro ist die Hauptstadt von Brasilien.",
+      "São Paulo ist die Hauptstadt von Brasilien."
+    ]
+  },
+
+  {
+    wahrheit: "Volkswagen baut den Golf.",
+    luegen: [
+      "BMW baut den Golf.",
+      "Mercedes baut den Golf."
+    ]
+  },
+  {
+    wahrheit: "Audi hat vier Ringe im Logo.",
+    luegen: [
+      "Audi hat drei Sterne im Logo.",
+      "Audi hat einen Löwen im Logo."
+    ]
+  },
+  {
+    wahrheit: "BMW hat seinen Sitz in München.",
+    luegen: [
+      "BMW hat seinen Sitz in Paris.",
+      "BMW hat seinen Sitz in Tokio."
+    ]
+  },
+  {
+    wahrheit: "Porsche ist für den 911 bekannt.",
+    luegen: [
+      "Porsche ist für den Golf bekannt.",
+      "Porsche ist für den Corsa bekannt."
+    ]
+  },
+  {
+    wahrheit: "Ferrari kommt aus Italien.",
+    luegen: [
+      "Ferrari kommt aus Schweden.",
+      "Ferrari kommt aus Kanada."
+    ]
+  },
+  {
+    wahrheit: "Tesla baut Elektroautos.",
+    luegen: [
+      "Tesla baut nur Dieselloks.",
+      "Tesla baut ausschließlich Fahrräder."
+    ]
+  },
+  {
+    wahrheit: "ABS steht für Antiblockiersystem.",
+    luegen: [
+      "ABS steht für Automatischer Benzin-Sparer.",
+      "ABS steht für Akku-Beschleunigungs-Schalter."
+    ]
+  },
+  {
+    wahrheit: "Ein Turbolader drückt mehr Luft in den Motor.",
+    luegen: [
+      "Ein Turbolader kühlt die Sitze.",
+      "Ein Turbolader ersetzt die Bremsen."
+    ]
+  },
+  {
+    wahrheit: "Allradantrieb bedeutet, dass alle vier Räder angetrieben werden können.",
+    luegen: [
+      "Allradantrieb bedeutet, dass nur ein Rad bremst.",
+      "Allradantrieb bedeutet, dass das Auto ohne Räder fährt."
+    ]
+  },
+  {
+    wahrheit: "Diesel und Benzin sind unterschiedliche Kraftstoffe.",
+    luegen: [
+      "Diesel und Benzin sind exakt dasselbe.",
+      "Diesel ist eigentlich Scheibenwischwasser."
+    ]
+  },
+
+  {
+    wahrheit: "Minecraft besteht stark aus Blöcken und Crafting.",
+    luegen: [
+      "Minecraft ist ein reines Fußballspiel.",
+      "Minecraft spielt nur unter Wasser."
+    ]
+  },
+  {
+    wahrheit: "GTA wird von Rockstar Games entwickelt.",
+    luegen: [
+      "GTA wird von IKEA entwickelt.",
+      "GTA wird von McDonald's entwickelt."
+    ]
+  },
+  {
+    wahrheit: "Fortnite wurde durch Battle Royale mit Bauen sehr bekannt.",
+    luegen: [
+      "Fortnite ist ein Schachprogramm.",
+      "Fortnite ist eine Wetter-App."
+    ]
+  },
+  {
+    wahrheit: "Mario gehört zu Nintendo.",
+    luegen: [
+      "Mario gehört zu Tesla.",
+      "Mario gehört zu Netflix."
+    ]
+  },
+  {
+    wahrheit: "Die PlayStation kommt von Sony.",
+    luegen: [
+      "Die PlayStation kommt von BMW.",
+      "Die PlayStation kommt von Lidl."
+    ]
+  },
+  {
+    wahrheit: "Die Xbox kommt von Microsoft.",
+    luegen: [
+      "Die Xbox kommt von Apple.",
+      "Die Xbox kommt von Samsung."
+    ]
+  },
+  {
+    wahrheit: "Steam gehört zu Valve.",
+    luegen: [
+      "Steam gehört zu Red Bull.",
+      "Steam gehört zu Adidas."
+    ]
+  },
+  {
+    wahrheit: "Rocket League kombiniert Autos und Fußball.",
+    luegen: [
+      "Rocket League kombiniert Kochen und Mathe.",
+      "Rocket League ist ein Angelspiel."
+    ]
+  },
+  {
+    wahrheit: "Pokémon hat Figuren wie Pikachu.",
+    luegen: [
+      "Pokémon hat nur echte Autos.",
+      "Pokémon spielt ausschließlich im Weltall."
+    ]
+  },
+  {
+    wahrheit: "Counter-Strike ist ein bekannter Shooter.",
+    luegen: [
+      "Counter-Strike ist ein Tanzspiel.",
+      "Counter-Strike ist ein Kochsimulator."
+    ]
+  },
+
+  {
+    wahrheit: "Harry Potter spielt zu großen Teilen in Hogwarts.",
+    luegen: [
+      "Harry Potter spielt komplett in einem Autohaus.",
+      "Harry Potter ist eine Doku über Steuererklärungen."
+    ]
+  },
+  {
+    wahrheit: "Titanic handelt von einem sinkenden Schiff.",
+    luegen: [
+      "Titanic handelt von einem fliegenden Motorrad.",
+      "Titanic handelt von einem sprechenden Kühlschrank."
+    ]
+  },
+  {
+    wahrheit: "Star Wars ist für Lichtschwerter bekannt.",
+    luegen: [
+      "Star Wars ist für sprechende Brote bekannt.",
+      "Star Wars spielt ausschließlich in München."
+    ]
+  },
+  {
+    wahrheit: "Breaking Bad handelt von Walter White.",
+    luegen: [
+      "Breaking Bad handelt von SpongeBob.",
+      "Breaking Bad handelt von einem Fußballverein."
+    ]
+  },
+  {
+    wahrheit: "Fast & Furious ist für Autos und Action bekannt.",
+    luegen: [
+      "Fast & Furious ist eine ruhige Kochshow.",
+      "Fast & Furious ist eine Doku über Schnecken."
+    ]
+  },
+  {
+    wahrheit: "Shrek ist ein grüner Oger.",
+    luegen: [
+      "Shrek ist ein roter Roboter.",
+      "Shrek ist ein sprechendes Auto."
+    ]
+  },
+  {
+    wahrheit: "Avatar spielt unter anderem auf Pandora.",
+    luegen: [
+      "Avatar spielt komplett in Karlsruhe.",
+      "Avatar spielt in einem Supermarkt."
+    ]
+  },
+  {
+    wahrheit: "Batman lebt in Gotham City.",
+    luegen: [
+      "Batman lebt in Bikini Bottom.",
+      "Batman lebt im Minecraft-Nether."
+    ]
+  },
+  {
+    wahrheit: "The Walking Dead hat Zombies beziehungsweise Walker.",
+    luegen: [
+      "The Walking Dead ist eine Quizshow.",
+      "The Walking Dead handelt von Formel 1."
+    ]
+  },
+  {
+    wahrheit: "Prison Break handelt von einem Gefängnisausbruch.",
+    luegen: [
+      "Prison Break handelt von einem Restauranttest.",
+      "Prison Break handelt von einem Campingurlaub."
+    ]
+  },
+
+  {
+    wahrheit: "Ein Big Mac kommt von McDonald's.",
+    luegen: [
+      "Ein Big Mac kommt von Subway.",
+      "Ein Big Mac kommt von Starbucks."
+    ]
+  },
+  {
+    wahrheit: "Der Whopper kommt von Burger King.",
+    luegen: [
+      "Der Whopper kommt von KFC.",
+      "Der Whopper kommt von IKEA."
+    ]
+  },
+  {
+    wahrheit: "Sushi kommt ursprünglich aus Japan.",
+    luegen: [
+      "Sushi kommt ursprünglich aus Norwegen.",
+      "Sushi kommt ursprünglich aus Brasilien."
+    ]
+  },
+  {
+    wahrheit: "Pizza kommt ursprünglich aus Italien.",
+    luegen: [
+      "Pizza kommt ursprünglich aus Kanada.",
+      "Pizza kommt ursprünglich aus Finnland."
+    ]
+  },
+  {
+    wahrheit: "Guacamole wird hauptsächlich aus Avocado gemacht.",
+    luegen: [
+      "Guacamole wird hauptsächlich aus Schokolade gemacht.",
+      "Guacamole wird hauptsächlich aus Reis gemacht."
+    ]
+  },
+  {
+    wahrheit: "Nutella enthält Haselnüsse.",
+    luegen: [
+      "Nutella enthält hauptsächlich Kartoffeln.",
+      "Nutella enthält Senf als Hauptzutat."
+    ]
+  },
+  {
+    wahrheit: "Bier wird aus Zutaten wie Wasser, Malz, Hopfen und Hefe hergestellt.",
+    luegen: [
+      "Bier wird hauptsächlich aus Benzin hergestellt.",
+      "Bier wird aus geschmolzenem Plastik hergestellt."
+    ]
+  },
+  {
+    wahrheit: "Ein Liter Cola hat ungefähr mehrere hundert Kalorien.",
+    luegen: [
+      "Ein Liter Cola hat null Kalorien, egal welche Sorte.",
+      "Ein Liter Cola hat mehr Kalorien als zehn Pizzen."
+    ]
+  },
+  {
+    wahrheit: "Ein Ei hat ungefähr 70 bis 90 Kalorien.",
+    luegen: [
+      "Ein Ei hat ungefähr 900 Kalorien.",
+      "Ein Ei hat exakt 1 Kalorie."
+    ]
+  },
+  {
+    wahrheit: "Ein Döner hat oft mehrere hundert Kalorien.",
+    luegen: [
+      "Ein Döner hat immer nur 50 Kalorien.",
+      "Ein Döner hat immer mehr als 3000 Kalorien."
+    ]
+  },
+
+  {
+    wahrheit: "Lionel Messi gewann mehrfach den Ballon d'Or.",
+    luegen: [
+      "Lionel Messi gewann nie einen Ballon d'Or.",
+      "Lionel Messi ist vor allem als Formel-1-Fahrer bekannt."
+    ]
+  },
+  {
+    wahrheit: "Cristiano Ronaldo ist für seinen Siuuu-Jubel bekannt.",
+    luegen: [
+      "Cristiano Ronaldo ist für seinen Miau-Jubel bekannt.",
+      "Cristiano Ronaldo spielt professionell Schach statt Fußball."
+    ]
+  },
+  {
+    wahrheit: "Michael Jordan wurde durch Basketball berühmt.",
+    luegen: [
+      "Michael Jordan wurde durch Skispringen berühmt.",
+      "Michael Jordan wurde durch Darts berühmt."
+    ]
+  },
+  {
+    wahrheit: "Usain Bolt wurde durch Sprint berühmt.",
+    luegen: [
+      "Usain Bolt wurde durch Golf berühmt.",
+      "Usain Bolt wurde durch Eishockey berühmt."
+    ]
+  },
+  {
+    wahrheit: "In der NBA spielt man Basketball.",
+    luegen: [
+      "In der NBA spielt man Fußball.",
+      "In der NBA spielt man Tennis."
+    ]
+  },
+  {
+    wahrheit: "Wimbledon ist mit Tennis verbunden.",
+    luegen: [
+      "Wimbledon ist ein Formel-1-Rennen.",
+      "Wimbledon ist ein Boxturnier."
+    ]
+  },
+  {
+    wahrheit: "Ein Touchdown gehört zu American Football.",
+    luegen: [
+      "Ein Touchdown gehört zu Schwimmen.",
+      "Ein Touchdown gehört zu Schach."
+    ]
+  },
+  {
+    wahrheit: "Ein Puck gehört zum Eishockey.",
+    luegen: [
+      "Ein Puck gehört zum Tennis.",
+      "Ein Puck gehört zum Golf."
+    ]
+  },
+  {
+    wahrheit: "Ein Golfplatz hat meistens 18 Löcher.",
+    luegen: [
+      "Ein Golfplatz hat meistens 2 Löcher.",
+      "Ein Golfplatz hat meistens 500 Löcher."
+    ]
+  },
+  {
+    wahrheit: "Beim Fußball gibt es normalerweise zwei Halbzeiten.",
+    luegen: [
+      "Beim Fußball gibt es normalerweise fünf Drittel.",
+      "Beim Fußball gibt es normalerweise nur eine Minute Spielzeit."
+    ]
+  }
+],
 
   quiz: [
   { frage: "Was ist die Hauptstadt von Deutschland?", antwort: "Berlin", schwierigkeit: "leicht" },
