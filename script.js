@@ -9,6 +9,9 @@ let rundenZeit = 60;
 let rundenPunkte = 0;
 let rundenTyp = "";
 let spielerDranIndex = 0;
+let alphabetKategorie = "";
+let alphabetIndex = 0;
+let alphabetBuchstaben = [];
 
 const app = document.getElementById("app");
 
@@ -29,10 +32,12 @@ const benutzteKarten = {
   woerterkette: [],
   zweiLuegenEineWahrheit: [],
   bombe: [],
+  werWuerdeEher: [],
   duemmsteFliegt: [],
   reime: [],
   imposterBerühmtePersonen: [],
   idiotentest: [],
+  alphabetSpiel: [],
   imposterVideospiele: [],
   imposterTiere: []
 };
@@ -154,6 +159,8 @@ spielerDranIndex = 0;
         <button onclick="duemmsteFliegtStart()">🏆 Der Dümmste fliegt</button>
         <button onclick="reimeModus()">🎤 Reime</button>
         <button onclick="zweiLuegenEineWahrheitModus()">🕵️ 2 Lügen 1 Wahrheit</button>
+        <button onclick="alphabetSpielStart()">🔤 Alphabet-Spiel</button>
+        <button onclick="werWuerdeEherModus()">🙋 Wer würde eher?</button>
         <button onclick="gemischt()">🎲 Gemischt</button>
       </div>
       <button class="secondary" onclick="spielerScreen()">Spieler ändern</button>
@@ -202,6 +209,108 @@ function spielerWeiterUndAktion(aktion) {
   } else if (aktion === "pantomimeModus()") {
     pantomimeModus();
   }
+}
+
+function werWuerdeEherModus() {
+  aktuelleKarte = zufaelligeKarte("werWuerdeEher", DATEN.werWuerdeEher);
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>🙋 Wer würde eher?</h2>
+
+      <div class="big">${aktuelleKarte}</div>
+
+      <p>Alle stimmen privat ab, auf welchen Spieler das am ehesten passt.</p>
+      <p>Die Spieler mit der Minderheit verlieren.</p>
+      <p>Minderheit trinkt ${schlucke()} Schlücke.</p>
+
+      <button onclick="${weiterAktion("werWuerdeEherModus()")}">Weiter</button>
+      <button class="secondary" onclick="${weiterAktion("werWuerdeEherModus()")}">Überspringen</button>
+      <button class="secondary" onclick="menuScreen()">Menü</button>
+    </div>
+  `;
+}
+
+function alphabetSpielStart() {
+  alphabetKategorie = zufaelligeKarte("alphabetSpiel", DATEN.alphabetSpiel);
+  alphabetIndex = 0;
+
+  alphabetBuchstaben = [
+    "A", "B", "C", "D", "E", "F", "G",
+    "H", "I", "J", "K", "L", "M", "N",
+    "O", "P", "Q", "R", "S", "T", "U",
+    "V", "W", "X", "Y", "Z"
+  ];
+
+  alphabetSpielRunde();
+}
+
+function alphabetSpielRunde() {
+  const buchstabe = alphabetBuchstaben[alphabetIndex];
+
+  app.innerHTML = `
+    <div class="card">
+      <h2>🔤 Alphabet-Spiel</h2>
+
+      <p>Kategorie:</p>
+      <div class="big">${alphabetKategorie}</div>
+
+      <p>Dran ist: <b>${spielerDran()}</b></p>
+
+      <p>Nenne ein Wort mit:</p>
+      <div class="big">${buchstabe}</div>
+
+      <p>Beispiel bei Essen: A = Apfel, B = Banane.</p>
+      <p>Wer nichts weiß oder etwas Falsches sagt, verliert und trinkt ${schlucke()} Schlücke.</p>
+
+      <button onclick="alphabetSpielRichtig()">Geschafft</button>
+      <button class="secondary" onclick="alphabetSpielVerloren()">Verloren</button>
+      <button class="secondary" onclick="menuScreen()">Menü</button>
+    </div>
+  `;
+}
+
+function alphabetSpielRichtig() {
+  naechsterSpielerDran();
+
+  alphabetIndex++;
+
+  if (alphabetIndex >= alphabetBuchstaben.length) {
+    alphabetSpielGewonnen();
+    return;
+  }
+
+  alphabetSpielRunde();
+}
+
+function alphabetSpielVerloren() {
+  app.innerHTML = `
+    <div class="card">
+      <h2>Verloren</h2>
+
+      <div class="big">${spielerDran()} hat verloren.</div>
+
+      <p>${spielerDran()} trinkt ${schlucke()} Schlücke.</p>
+
+      <button onclick="alphabetSpielStart()">Neue Runde</button>
+      <button class="secondary" onclick="menuScreen()">Menü</button>
+    </div>
+  `;
+}
+
+function alphabetSpielGewonnen() {
+  app.innerHTML = `
+    <div class="card">
+      <h2>🔤 Alphabet geschafft</h2>
+
+      <div class="big">Ihr habt A bis Z geschafft!</div>
+
+      <p>Alle anderen trinken 1 Schluck oder ihr startet direkt eine neue Runde.</p>
+
+      <button onclick="alphabetSpielStart()">Neue Runde</button>
+      <button class="secondary" onclick="menuScreen()">Menü</button>
+    </div>
+  `;
 }
 
 function zweiLuegenEineWahrheitModus() {
@@ -1046,6 +1155,8 @@ function naechsterGemischtModus() {
       "bombe",
       "findeDenLuegner",
        "reime",
+       "alphabetSpiel",
+       "werWuerdeEher",
        "zweiLuegenEineWahrheit",
       "duemmsteFliegt",
       "gemischtAktion",
@@ -1066,9 +1177,15 @@ function naechsterGemischtModus() {
     case "quiz":
       quizModus("quiz");
       break;
+      case "alphabetSpiel":
+  alphabetSpielStart();
+  break;
     case "schaetzfragen":
       quizModus("schaetzfragen");
       break;
+      case "werWuerdeEher":
+  werWuerdeEherModus();
+  break;
       case "gemischtAktion":
     gemischtAktionModus();
     break;
