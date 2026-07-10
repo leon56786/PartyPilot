@@ -39,7 +39,13 @@ const benutzteKarten = {
   idiotentest: [],
   alphabetSpiel: [],
   imposterVideospiele: [],
-  imposterTiere: []
+  imposterTiere: [],
+  gleicheAntwort: [],
+  gedankenlesen: [],
+  teamMemory: [],
+  teamKenntTeam: [],
+  meinTeamKann: [],
+  erklaerDuell: []
 };
 
 function zufaelligeKarte(modus, datenArray) {
@@ -86,7 +92,7 @@ function spielerScreen() {
       <p>2 bis maximal 12 Spieler</p>
       <div id="inputs"></div>
       <button onclick="addSpieler()">Spieler hinzufügen</button>
-      <button onclick="menuScreen()">Weiter</button>
+      <button onclick="spielerWeiter()">Weiter</button>
       <button class="secondary" onclick="startScreen()">Zurück</button>
     </div>
   `;
@@ -100,6 +106,21 @@ function spielerScreen() {
   } else {
     addSpieler();
     addSpieler();
+  }
+}
+
+
+function spielerWeiter() {
+  if (!getSpieler()) return;
+
+  if (typeof kannTeamModusStarten === "function" && kannTeamModusStarten()) {
+    spielartScreen();
+  } else {
+    if (typeof teamModusAktiv !== "undefined") {
+      teamModusAktiv = false;
+    }
+
+    menuScreen();
   }
 }
 

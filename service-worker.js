@@ -1,11 +1,12 @@
-const CACHE_NAME = "partypilot-v10";
+const CACHE_NAME = "partypilot-v13";
 
 const urlsToCache = [
   "./",
   "./index.html",
   "./style.css",
-  "./script.js?v=3",
-"./daten.js?v=3",
+  "./script.js?v=6",
+  "./team.js?v=2",
+  "./daten.js?v=4",
   "./manifest.json",
   "./icon.png"
 ];
